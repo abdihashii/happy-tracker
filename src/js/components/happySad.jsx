@@ -1,8 +1,10 @@
 import React from "react";
+import ReactDOM from "react-dom";
 //import "../../sass/happySad.css";
 
 import happy from "../../happyface.svg";
 import sad from "../../sadface.png";
+import Advice from "./advice.jsx";
 
 export default class happySad extends React.Component {
     constructor(props) {
@@ -26,6 +28,10 @@ export default class happySad extends React.Component {
     }
 
     onHappyClick(){
+        if (document.getElementById("advice-mount") !== null) {
+            document.getElementById("advice-mount").remove();
+        }
+        
         let lastHappy = this.state.lastHappy
         lastHappy[lastHappy.length] = this.state.curTime
         if (lastHappy.length > 1) {
@@ -47,6 +53,16 @@ export default class happySad extends React.Component {
         }
         this.setState({message2:"I'm sad you are sad!!"})
         this.setState({lastSad})
+
+        if (document.getElementById("advice-mount") !== null) {
+            document.getElementById("advice-mount").remove();
+        }
+        const node = <Advice/>;
+        const newDiv = document.createElement("div");
+        document.body.append(newDiv);
+        newDiv.id = "advice-mount";
+        ReactDOM.render(node, document.getElementById("advice-mount"));
+
     }
 
 
