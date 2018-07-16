@@ -11,13 +11,14 @@ import Advice from "./advice.jsx"
 export default class happySad extends React.Component {
     constructor(props) {
         super(props)
-        this.state={
+        this.state = {
           lastHappy: [],
           lastSad: [],
           message: "",
           // message2: "How are you feeling today?",
           curTime: "",
         }
+
         this.onHappyClick=this.onHappyClick.bind(this);
         this.onSadClick = this.onSadClick.bind(this);
     }
@@ -31,10 +32,6 @@ export default class happySad extends React.Component {
     }
 
     onHappyClick(){
-        if (document.getElementById("advice-mount") !== null) {
-            document.getElementById("advice-mount").remove();
-        }
-
         let lastHappy = this.state.lastHappy
         lastHappy[lastHappy.length] = this.state.curTime
 
@@ -44,6 +41,10 @@ export default class happySad extends React.Component {
         // }
 
         this.setState({message2:"Here's something to keep you going!"})
+
+        if (document.getElementById("advice-mount") !== null) {
+            document.getElementById("advice-mount").remove();
+        }
 
         // this.setState({lastHappy})
     }
@@ -63,6 +64,7 @@ export default class happySad extends React.Component {
         if (document.getElementById("advice-mount") !== null) {
             document.getElementById("advice-mount").remove();
         }
+
         const node = <Advice/>;
         const newDiv = document.createElement("div");
         document.body.append(newDiv);
@@ -75,10 +77,12 @@ export default class happySad extends React.Component {
     render() {
         return (
             <div className="Emotions">
-                <img src={happy} onClick={_ => this.onHappyClick()} style={{height:"200px" }}/>
-                <img src={sad}  onClick={ _ => this.onSadClick()} style={{height:"200px"}}/>
+                <img src={happy} onClick={_ => this.onHappyClick()} />
+                <img src={sad}  onClick={ _ => this.onSadClick()} />
                 <h1> {this.state.message2}</h1>
-                {(this.state.message !== "")? <h2> {this.state.message}</h2> : <p> </p> }
+                {(this.state.message !== "") ? <h2> {this.state.message} </h2>
+                : <p> </p> }
+                
             </div>
         )
 
