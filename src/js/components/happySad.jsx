@@ -1,20 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-//import "../../sass/happySad.css";
+import "./happySad.css";
 
-import happy from "../../happyface.svg";
-import sad from "../../sadface.png";
-import Advice from "./advice.jsx";
+import happy from "../../Assets/smile.svg";
+import meh from "../../Assets/meh.svg";
+import sad from "../../Assets/sad.svg";
+
+import Advice from "./advice.jsx"
 
 export default class happySad extends React.Component {
     constructor(props) {
         super(props)
-        this.state={lastHappy:[],
-                    lastSad: [],
-                    message: "",
-                    message2: "How are you feeling today?",
-                    curTime: "",
+        this.state = {
+          lastHappy: [],
+          lastSad: [],
+          message: "",
+          // message2: "How are you feeling today?",
+          curTime: "",
         }
+
         this.onHappyClick=this.onHappyClick.bind(this);
         this.onSadClick = this.onSadClick.bind(this);
     }
@@ -28,35 +32,39 @@ export default class happySad extends React.Component {
     }
 
     onHappyClick(){
+        let lastHappy = this.state.lastHappy
+        lastHappy[lastHappy.length] = this.state.curTime
+
+        // if (lastHappy.length > 1) {
+        //     let message = "You were last happy at " + lastHappy[lastHappy.length-2] + "!"
+        //     this.setState({message})
+        // }
+
+        this.setState({message2:"Here's something to keep you going!"})
+
         if (document.getElementById("advice-mount") !== null) {
             document.getElementById("advice-mount").remove();
         }
-        
-        let lastHappy = this.state.lastHappy
-        lastHappy[lastHappy.length] = this.state.curTime
-        if (lastHappy.length > 1) {
-            let message = "You were last happy at " + lastHappy[lastHappy.length-2] + "!"
-            this.setState({message})
-        }
-        this.setState({message2:"I'm happy you are happy!!"})
-        this.setState({lastHappy})
 
-
+        // this.setState({lastHappy})
     }
 
     onSadClick(){
         let lastSad = this.state.lastSad
         lastSad[lastSad.length] = this.state.curTime
-        if (lastSad.length > 1) {
-            let message = "You were last happy at " + lastSad[lastSad.length-2] + "!"
-            this.setState({message})
-        }
-        this.setState({message2:"I'm sad you are sad!!"})
-        this.setState({lastSad})
+
+        // if (lastSad.length > 1) {
+        //     let message = "You were last happy at " + lastSad[lastSad.length-2] + "!"
+        //     this.setState({message})
+        // }
+
+        this.setState({message2:"That's okay! Maybe we can help :)"})
+        // this.setState({lastSad})
 
         if (document.getElementById("advice-mount") !== null) {
             document.getElementById("advice-mount").remove();
         }
+
         const node = <Advice/>;
         const newDiv = document.createElement("div");
         document.body.append(newDiv);
@@ -68,15 +76,15 @@ export default class happySad extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1> {this.state.curTime} </h1>
-                <img src={happy} onClick={_ => this.onHappyClick()} style={{height:"200px" }}/>
-                <img src={sad}  onClick={ _ => this.onSadClick()} style={{height:"200px"}}/>
+            <div className="Emotions">
+                <img src={happy} onClick={_ => this.onHappyClick()} />
+                <img src={sad}  onClick={ _ => this.onSadClick()} />
                 <h1> {this.state.message2}</h1>
-                {(this.state.message !== "")? <h2> {this.state.message}</h2> : <p> </p> }
+                {(this.state.message !== "") ? <h2> {this.state.message} </h2>
+                : <p> </p> }
+                
             </div>
         )
 
     }
 }
-
